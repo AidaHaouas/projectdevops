@@ -9,7 +9,7 @@ pipeline {
             agent any
             steps{
                 
-                git branch: 'main', url:'https://github.com/AidaHaouas/todo-devops.git'
+                git branch: 'main', url:'https://github.com/AidaHaouas/projectdevops.git'
             }
         }
         stage('Init'){
@@ -21,20 +21,20 @@ pipeline {
         stage('Build'){
             steps {
                 
-                sh 'docker build -t Todo-docker-build . -f ./Dockerfile .'
+                sh 'docker build -t aidahaouas/Todo-docker-build . -f ./Dockerfile .'
                 //sh 'docker build -t $DOCKERHUB_CREDENTIALS_USR/calculator-app:$BUILD_ID' 
             }
         }
         stage('Deliver'){
             steps {
                 
-                sh 'docker push Todo-docker-build .'
+                sh 'docker push aidahaouas/Todo-docker-build .'
             }
         }
         stage('Cleanup'){
             steps {
             
-            sh 'docker rmi Todo-docker-build'
+            sh 'docker rmi aidahaouas/Todo-docker-build'
             sh 'docker logout'
             }
         }
