@@ -1,41 +1,34 @@
 pipeline {
     agent any
     environment {
-        
         DOCKERHUB_CREDENTIALS = credentials('DOCKER_Aida')
     }
     stages {
-        stage('Checkout'){
+        stage('Checkout') {
             agent any
-            steps{
-                
-                git branch: 'main', url:'https://github.com/AidaHaouas/projectdevops.git'
+            steps {
+                git branch: 'main', url: 'https://github.com/AidaHaouas/projectdevops.git'
             }
         }
-        stage('Init'){
-            steps{
-                
+        stage('Init') {
+            steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
-        stage('Build'){
+        stage('Build') {
             steps {
-                
-               sh 'docker build -t aidahaouas/todo-docker-build:v1:$BUILD_ID -f ./Dockerfile .'
-                //sh 'docker build -t $DOCKERHUB_CREDENTIALS_USR/calculator-app:$BUILD_ID' 
+                docker.build('aidahaouas/todo-docker-build:v1:$BUILD_ID', '.')
             }
         }
-        stage('Deliver'){
+        stage('Deliver') {
             steps {
-                
-                sh 'docker push aidahaouas/todo-docker-build:v1:$BUILD_ID'
+                docker.push('aidahaouas/todo-docker-build:v1:$BUILD_ID')
             }
         }
-        stage('Cleanup'){
+        stage('Cleanup') {
             steps {
-            
-            sh 'docker rmi aidahaouas/todo-docker-build:v1:$BUILD_ID'
-            sh 'docker logout'
+                docker.image.remove('aidahaouas/todo-docker-build:v1:$BUILD_ID', force: true)
+                docker.logout()
             }
         }
     }
