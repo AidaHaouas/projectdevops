@@ -21,20 +21,20 @@ pipeline {
         stage('Build'){
             steps {
                 
-                sh 'docker build -t aidahaouas/Todo-docker-build . -f ./Dockerfile .'
+                sh 'docker build -t aidahaouas/todo-docker-build . -f ./Dockerfile .'
                 //sh 'docker build -t $DOCKERHUB_CREDENTIALS_USR/calculator-app:$BUILD_ID' 
             }
         }
         stage('Deliver'){
             steps {
                 
-                sh 'docker push aidahaouas/Todo-docker-build .'
+                sh 'docker push aidahaouas/todo-docker-build .'
             }
         }
         stage('Cleanup'){
             steps {
             
-            sh 'docker rmi aidahaouas/Todo-docker-build'
+            sh 'docker rmi aidahaouas/todo-docker-build'
             sh 'docker logout'
             }
         }
