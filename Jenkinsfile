@@ -28,13 +28,13 @@ pipeline {
         stage('Deliver'){
             steps {
                 
-                sh 'docker push aidahaouas/todo-docker-build .'
+                sh 'docker push aidahaouas/todo-docker-app:$BUILD_ID .'
             }
         }
         stage('Cleanup'){
             steps {
             
-            sh 'docker rmi aidahaouas/todo-docker-build'
+            sh 'docker rmi aidahaouas/todo-docker-app:$BUILD_ID'
             sh 'docker logout'
             }
         }
