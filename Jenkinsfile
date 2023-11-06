@@ -28,7 +28,7 @@ pipeline {
         stage('Deliver'){
             steps {
                 
-                sh 'docker push aidahaouas/todo-docker-app:$BUILD_ID .'
+                sh 'docker push aidahaouas/todo-docker-app:$BUILD_ID'
             }
         }
         stage('Cleanup'){
