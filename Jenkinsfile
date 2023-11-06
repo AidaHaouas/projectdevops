@@ -21,7 +21,7 @@ pipeline {
         stage('Build'){
             steps {
                 
-                sh 'docker build -t aidahaouas/todo-docker-build . -f ./Dockerfile .'
+               sh 'docker build -t aidahaouas/todo-docker-build:$BUILD_ID -f ./Dockerfile .'
                 //sh 'docker build -t $DOCKERHUB_CREDENTIALS_USR/calculator-app:$BUILD_ID' 
             }
         }
